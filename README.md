@@ -1,167 +1,197 @@
-# Echo
+# Transcriber - AI-Powered Audio Transcription App
 
-An AI-powered transcription application that converts audio to text with automatic speaker diarization using Whisper and pyannote.audio.
+An AI-powered transcription application that converts audio to text with speaker diarization using OpenAI Whisper and pyannote.audio.
 
-## Overview
+## Features
 
-Echo is a full-stack web application that:
-- Transcribes audio and video files to text
-- Identifies and labels different speakers (speaker diarization)
-- Provides export options (plain text, SRT subtitles, JSON)
-- Features a modern React frontend with FastAPI backend
+- 🎤 **Audio Transcription** - Convert audio/video files to text using OpenAI Whisper
+- 👥 **Speaker Diarization** - Automatically identify and label different speakers
+- 📄 **Multiple Export Formats** - Export as plain text, SRT subtitles, or JSON
+- 🚀 **Fast Processing** - Async task processing with Celery
+- 📊 **Job History** - Track all your transcription jobs
+- 🖼️ **Modern UI** - Built with React, TypeScript, and Tailwind CSS
 
 ## Tech Stack
 
 ### Frontend
-- **Framework**: React 18+ with TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui (built on Radix UI)
-- **State Management**: React Context API + Zustand
-- **File Handling**: React Dropzone
+
+- React 18+ with TypeScript
+- Tailwind CSS
+- React Dropzone (file uploads)
+- Zustand (state management)
+- Axios (HTTP client)
 
 ### Backend
-- **Framework**: FastAPI (Python)
-- **Transcription**: OpenAI Whisper (base/small models)
-- **Speaker Diarization**: pyannote.audio
-- **Task Queue**: Celery with Redis
-- **Database**: SQLite
 
-## Architecture
+- FastAPI (Python web framework)
+- OpenAI Whisper (speech-to-text)
+- pyannote.audio (speaker diarization)
+- Celery + Redis (async task queue)
+- SQLite (database)
+- Docker (containerization)
 
-```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   Frontend      │     │   Backend       │     │   Celery        │
-│   (React)       │────▶│   (FastAPI)     │────▶│   (Workers)     │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-                                                     │
-                                    ┌────────────────┼────────────────┐
-                                    │                │                │
-                              ┌─────▼─────┐  ┌─────▼─────┐  ┌─────▼─────┐
-                              │  Redis    │  │  Whisper  │  │ pyannote  │
-                              │  (Broker) │  │  (STT)    │  │ (Diarization)│
-                              └───────────┘  └───────────┘  └───────────┘
-                                                     │
-                                                ┌────▼────┐
-                                                │ SQLite  │
-                                                │ (Store) │
-                                                └─────────┘
+## Prerequisites
+
+- Docker and Docker Compose
+- git
+
+## Quick Start
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd transcriber
 ```
 
-## Quick Start with Docker
-
-### Prerequisites
-- Docker and Docker Compose installed
-
-### Installation
-
-1. Clone the repository
-2. Build and run all services:
+1. Start the application:
 
 ```bash
 docker-compose up --build
 ```
 
 This will start:
-- Redis (port 6379)
-- Backend API (port 8000)
-- Frontend (port 3000)
-- Celery worker
-- Celery beat (scheduled tasks)
 
-Access the application at [http://localhost:3000](http://localhost:3000)
+- Redis on port 6379
+- Backend API on <http://localhost:8000>
+- Frontend on <http://localhost:3000>
+- Celery worker for async processing
+- Celery Beat for scheduled tasks
 
-## Local Development
+1. Open your browser and navigate to <http://localhost:3000>
 
-### Prerequisites
-- Python 3.10+
-- Node.js 18+
-- Redis server
+## Local Development (Non-Docker)
 
-### Setup
+### Backend Setup
 
-1. **Clone the repository**
-```bash
-git clone <repository-url>
-cd echo
-```
+1. Navigate to backend directory:
 
-2. **Backend Setup**
 ```bash
 cd backend
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
 ```
 
-3. **Frontend Setup**
+1. Create and activate virtual environment:
+
 ```bash
-cd ../frontend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+1. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+1. Start the backend server:
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+### Frontend Setup
+
+1. Open a new terminal and navigate to frontend directory:
+
+```bash
+cd frontend
+```
+
+1. Install dependencies:
+
+```bash
 npm install
+```
+
+1. Start the development server:
+
+```bash
 npm run dev
 ```
 
-4. **Redis Setup** (in a separate terminal)
-```bash
-redis-server
-```
-
-5. **Celery Worker** (in a separate terminal)
-```bash
-cd backend
-celery -A app.tasks.celery_app worker --loglevel=info
-```
-
-Access the frontend at [http://localhost:3000](http://localhost:3000)
-
-## Configuration
-
-### Backend (.env)
-```env
-APP_NAME="Echo API"
-DEBUG=False
-CORS_ORIGINS=http://localhost:3000
-
-WHISPER_MODEL=base
-WHISPER_DEVICE=cpu
-
-PYANNOTE_MODEL=pyannote/speaker-diarization
-
-CELERY_BROKER_URL=redis://localhost:6379/0
-CELERY_RESULT_BACKEND=redis://localhost:6379/0
-
-MAX_UPLOAD_SIZE=524288000
-UPLOAD_DIR=/tmp/transcriber
-
-DATABASE_URL=sqlite:///./transcriber.db
-```
-
-### Frontend (.env)
-```env
-VITE_API_URL=http://localhost:8000/api/v1
-VITE_APP_NAME="Echo"
-VITE_MAX_FILE_SIZE=500
-```
+The frontend will be available at <http://localhost:5173>
 
 ## Supported File Formats
 
-- Audio: MP3, WAV, M4A, FLAC, OGG
-- Video: MP4, MOV, WEBM
+- Audio: MP3, WAV, M4A, FLAC
+- Video: MP4, MOV
 
-Maximum file size: 500MB (free tier)
+## Configuration
+
+### Environment Variables
+
+**Backend (.env):**
+
+```env
+WHISPER_MODEL=base
+WHISPER_DEVICE=cpu
+PYANNOTE_MODEL=pyannote/speaker-diarization
+CELERY_BROKER_URL=redis://localhost:6379/0
+CELERY_RESULT_BACKEND=redis://localhost:6379/0
+DATABASE_URL=sqlite:///./transcriber.db
+MAX_UPLOAD_SIZE=524288000
+UPLOAD_DIR=/tmp/transcriber
+```
+
+**Frontend (.env):**
+
+```env
+VITE_API_URL=http://localhost:8000/api/v1
+```
 
 ## API Endpoints
 
 ### POST /api/v1/transcribe
+
 Upload and transcribe an audio file.
 
+**Request:**
+
+- `file`: multipart/form-data (audio file)
+
+**Response:**
+
+```json
+{
+  "job_id": "uuid",
+  "status": "queued",
+  "message": "File uploaded, processing started"
+}
+```
+
 ### GET /api/v1/jobs/{job_id}
-Check job status and get transcription results.
+
+Check job status and get results.
+
+**Response (complete):**
+
+```json
+{
+  "job_id": "uuid",
+  "status": "completed",
+  "result": {
+    "text": "Full transcription...",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.5,
+        "text": "Hello everyone",
+        "speaker": "SPEAKER_00",
+        "confidence": 0.95
+      }
+    ],
+    "speakers": 2,
+    "duration": 120.5
+  }
+}
+```
 
 ### GET /api/v1/history
+
 List all transcriptions with metadata.
 
 ### DELETE /api/v1/jobs/{job_id}
+
 Delete a transcription job.
 
 ## Project Structure
@@ -170,32 +200,43 @@ Delete a transcription job.
 transcriber/
 ├── backend/
 │   ├── app/
-│   │   ├── api/v1/          # API endpoints
-│   │   ├── models.py        # SQLAlchemy models
-│   │   ├── schemas.py       # Pydantic schemas
-│   │   ├── services/        # ML services (Whisper, pyannote)
-│   │   ├── tasks/           # Celery workers
-│   │   └── utils/           # Utilities
+│   │   ├── api/          # API endpoints
+│   │   ├── models.py     # Database models
+│   │   ├── schemas.py    # Pydantic schemas
+│   │   ├── services/     # ML services (Whisper, Diarization)
+│   │   ├── tasks/        # Celery tasks
+│   │   └── utils/        # Utility functions
 │   ├── requirements.txt
 │   └── Dockerfile
 ├── frontend/
 │   ├── src/
-│   │   ├── components/      # React components
-│   │   ├── hooks/           # Custom hooks
-│   │   └── types/           # TypeScript types
+│   │   ├── components/   # React components
+│   │   ├── pages/        # Page components
+│   │   ├── hooks/        # Custom hooks
+│   │   └── types/        # TypeScript types
 │   ├── public/
 │   ├── package.json
 │   └── Dockerfile
-└── docker-compose.yml
+├── docker-compose.yml
+└── README.md
 ```
 
-## Contributing
+## Troubleshooting
 
-1. Create a feature branch: `git checkout -b feature/your-feature-name`
-2. Commit your changes: `git commit -m 'feat: add some feature'`
-3. Push to the branch: `git push origin feature/your-feature-name`
-4. Open a Pull Request
+### Common Issues
+
+1. **Whisper model download fails**
+   - The first run will download the Whisper model (~140MB for base model)
+   - Be patient, this may take a few minutes
+
+2. **Port already in use**
+   - Change the port in docker-compose.yml
+   - Update VITE_API_URL in frontend/.env accordingly
+
+3. **File too large**
+   - Default max file size is 500MB
+   - Increase MAX_UPLOAD_SIZE in docker-compose.yml
 
 ## License
 
-MIT License
+MIT

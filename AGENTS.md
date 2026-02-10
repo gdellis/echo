@@ -12,7 +12,8 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 
 **Role**: React/TypeScript development, UI component creation, frontend architecture
 
-** Responsibilities**:
+**Responsibilities**:
+
 - Create and modify React components
 - Implement TypeScript interfaces and types
 - Configure and customize Tailwind CSS
@@ -21,11 +22,13 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 - Debug frontend issues and browser behavior
 
 **Access**:
+
 - `frontend/src/` directory
 - Frontend configuration files (package.json, vite.config.ts, tailwind.config.js)
 - Design documentation for UI requirements
 
 **Commands**:
+
 - `generate component` - Create new React component
 - `fix frontend bug` - Debug and fix frontend issues
 - `add type definitions` - Create TypeScript interfaces
@@ -38,6 +41,7 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 **Role**: FastAPI/Python development, API design, database models, async task processing
 
 **Responsibilities**:
+
 - Create and modify FastAPI endpoints
 - Implement SQLAlchemy database models
 - Create Pydantic schemas
@@ -46,11 +50,13 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 - Debug backend services and API issues
 
 **Access**:
+
 - `backend/app/` directory
 - Backend configuration files
 - ML service integrations (Whisper, pyannote.audio)
 
 **Commands**:
+
 - `generate endpoint` - Create new API endpoint
 - `add database model` - Create SQLAlchemy model
 - `add celery task` - Create async background task
@@ -63,16 +69,19 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 **Role**: End-to-end feature implementation, integration testing, deployment
 
 **Responsibilities**:
+
 - Implement complete features across frontend and backend
 - Configure docker-compose.yml for full stack
 - Debug integration issues between services
 - Deploy and test the complete application
 
 **Access**:
+
 - All project directories
 - Configuration files (docker-compose.yml, environment variables)
 
 **Commands**:
+
 - `implement feature` - Create complete feature with tests
 - `debug integration` - Fix cross-service issues
 - `deploy application` - Build and run the full stack
@@ -84,18 +93,21 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 **Role**: Writing and maintaining project documentation
 
 **Responsibilities**:
+
 - Create and update markdown documentation
 - Generate API documentation
 - Create architecture diagrams (Mermaid format)
 - Maintain AGENTS.md, DESIGN.md, and README files
 
 **Access**:
+
 - All documentation files
 - Design document for technical specifications
 - `.markdownlint.yaml` - Markdown linting configuration
 - `.clinerules/markdown-linting.md` - Detailed markdown linting rules
 
 **Commands**:
+
 - `generate docs` - Create new documentation file
 - `update existing docs` - Modify documentation
 - `add mermaid diagram` - Create architecture/flow diagrams
@@ -273,6 +285,7 @@ Install the "Markdownlint" extension (kddejong.vscode-markdownlint) for real-tim
 #### Pre-commit Hook
 
 Add to `.git/hooks/pre-commit`:
+
 ```bash
 markdownlint "**/*.md" || exit 1
 ```
@@ -280,6 +293,7 @@ markdownlint "**/*.md" || exit 1
 #### CI Integration
 
 Add to `.github/workflows/lint.yml`:
+
 ```yaml
 - name: Lint Markdown files
   run: npx markdownlint "**/*.md"
@@ -316,6 +330,7 @@ Add to `.github/workflows/lint.yml`:
 #### Examples
 
 **Good:**
+
 ```markdown
 # Project Title
 
@@ -355,12 +370,14 @@ print("missing language")
 **Role**: Testing, validation, and quality assurance
 
 **Responsibilities**:
+
 - Create unit tests for frontend components
 - Create API tests for backend endpoints
 - Test integrations between services
 - Validate file upload and processing workflows
 
 **Commands**:
+
 - `run tests` - Execute test suite
 - `create test` - Generate new tests
 - `fix test failure` - Debug and fix failing tests
@@ -370,6 +387,7 @@ print("missing language")
 ## Agent Communication
 
 Agents coordinate through:
+
 1. **Design Document** (`DESIGN.md`) - Single source of truth for architecture
 2. **AGENTS.md** - This file - defines agent responsibilities
 3. **Code Comments** - Technical notes for specific implementations
@@ -394,6 +412,7 @@ Agents coordinate through:
 ## Contact & Support
 
 For questions about agent capabilities or responsibilities, refer to:
+
 - `DESIGN.md` - Technical architecture details
 - `.clinerules/` - Project-specific rules and guidelines
 - This file - Agent definitions and commands
