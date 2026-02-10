@@ -416,3 +416,143 @@ For questions about agent capabilities or responsibilities, refer to:
 - `DESIGN.md` - Technical architecture details
 - `.clinerules/` - Project-specific rules and guidelines
 - This file - Agent definitions and commands
+
+---
+
+## Pull Request Template
+
+This document specifies the pull request template and best practices for the Echo (Transcriber) project. These guidelines ensure consistent, high-quality PRs across all development work.
+
+### PR Title Format
+
+Use the conventional commits format:
+
+```
+<type>: <description>
+```
+
+**Types:**
+- `feat` - New feature
+- `fix` - Bug fix
+- `chore` - Maintenance, configuration, or refactoring
+- `docs` - Documentation changes
+- `style` - Code style changes (formatting, semicolons, etc.)
+- `refactor` - Code refactoring
+- `test` - Adding or updating tests
+- `ci` - CI/CD changes
+- `perf` - Performance improvements
+- `build` - Build system or external dependencies
+
+**Examples:**
+- `feat: add markdown linting guidelines`
+- `fix: resolve file upload timeout`
+- `chore: update Docker configuration`
+
+---
+
+### PR Description Template
+
+```markdown
+# Pull Request Description
+
+## 📋 Overview
+
+Brief summary of what this PR does and why it's needed.
+
+## 🔧 Changes
+
+### 📁 File Changes
+- `filename`: Brief description of change
+- `filename`: Brief description of change
+
+### 🐳 Infrastructure
+- Description of infrastructure changes
+
+### 🗂️ Configuration
+- Description of configuration changes
+
+## 🎯 Benefits
+
+| Benefit | Description |
+|---------|-------------|
+| **Benefit** | Description |
+
+## 🧪 Testing
+
+- [ ] Test 1
+- [ ] Test 2
+- [ ] Test 3
+
+## 📝 Notes
+
+Any additional context or considerations.
+```
+
+### Best Practices
+
+| Practice | Description |
+|----------|-------------|
+| **Clear Title** | Use conventional commit format for easy history tracking |
+| **Brief Summary** | Explain what changed and why in the Overview section |
+| **Organized Changes** | Group related changes under appropriate headers |
+| **Benefits Table** | Highlight the impact of changes |
+| **Testing Checklist** | Include actionable testing items |
+| **Concise, Not Long** | Be specific; avoid filler text |
+
+### Example PR Description
+
+```markdown
+# Pull Request Description
+
+## 📋 Overview
+
+This PR applies best practices identified during the review of PR #1 for repository structure and file management.
+
+## 🔧 Changes
+
+### 📁 Repository Structure
+- Added comprehensive `.gitignore` file with rules for:
+  - Python (`.pyc`, `__pycache__`, `.pytest_cache`)
+  - Node.js (`node_modules/`, `package-lock.json`)
+  - IDE files (`.vscode/`, `.idea/`)
+  - Logs and temporary files
+
+### 🐳 Docker Improvements
+- **Multi-stage build** in `frontend/Dockerfile`:
+  - Builder stage: Installs dependencies and builds the app
+  - Production stage: Small nginx Alpine image with only built assets
+  - Result: Significantly smaller production image
+
+- **Optimized nginx configuration** (`frontend/nginx.conf`):
+  - Efficient static file serving
+  - Gzip compression enabled
+  - Proper caching headers
+
+### 🗂️ Configuration
+- Added `.env.example` for environment variable templates
+- Removed `node_modules/` from repository (reduces size significantly)
+
+### 📖 Documentation
+- Updated `README.md` with comprehensive project information
+
+## 🎯 Benefits
+
+| Benefit | Description |
+|---------|-------------|
+| **Smaller Repo** | Removing `node_modules/` reduces repository size dramatically |
+| **Cleaner History** | Proper `.gitignore` prevents accidental commits of build artifacts |
+| **Faster Builds** | Multi-stage Docker builds cache dependencies separately |
+| **Better Security** | Sensitive files (`.env`) are never committed |
+| **Improved Setup** | `.env.example` provides clear setup guidance |
+
+## 🧪 Testing
+
+- [ ] Verify `.gitignore` prevents unwanted files from being committed
+- [ ] Test Docker build: `docker build -f frontend/Dockerfile -t echo-frontend .`
+- [ ] Test nginx configuration: `docker run -p 8080:80 echo-frontend`
+
+## 📝 Notes
+
+- This PR addresses recommendations from the PR #1 review
+- All changes follow project conventions and best practices
+```
