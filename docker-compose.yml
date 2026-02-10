@@ -8,7 +8,7 @@ services:
     volumes:
       - redis_data:/data
     networks:
-      - transcriber-network
+      - echo-network
 
   celery_worker:
     build: ./backend
@@ -24,7 +24,7 @@ services:
       - DATABASE_URL=sqlite:///./transcriber.db
       - CORS_ORIGINS=http://localhost:3000
     networks:
-      - transcriber-network
+      - echo-network
 
   celery_beat:
     build: ./backend
@@ -38,7 +38,7 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
       - DATABASE_URL=sqlite:///./transcriber.db
     networks:
-      - transcriber-network
+      - echo-network
 
   backend:
     build: ./backend
@@ -60,7 +60,7 @@ services:
       - PYANNOTE_MODEL=pyannote/speaker-diarization
       - MAX_UPLOAD_SIZE=524288000
     networks:
-      - transcriber-network
+      - echo-network
 
   frontend:
     build: ./frontend
@@ -71,10 +71,10 @@ services:
     environment:
       - VITE_API_URL=http://localhost:8000/api/v1
     networks:
-      - transcriber-network
+      - echo-network
 
 networks:
-  transcriber-network:
+  echo-network:
     driver: bridge
 
 volumes:

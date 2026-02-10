@@ -8,7 +8,7 @@ load_dotenv()
 
 class Settings:
     # FastAPI
-    APP_NAME: str = os.getenv("APP_NAME", "Transcriber API")
+    APP_NAME: str = os.getenv("APP_NAME", "Echo API")
     DEBUG: bool = os.getenv("DEBUG", "False").lower() == "true"
     CORS_ORIGINS: list = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
     
