@@ -5,8 +5,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install dependencies (including dev dependencies for build)
+RUN npm ci
 
 # Copy application code
 COPY . .
@@ -14,8 +14,9 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Expose port
-EXPOSE 3000
-
-# Start the application
-CMD ["npm", "start"]
+# Use nginx to serve the built files
+FROM nginx:alpine
+COPY --from=0 /app/dist /usr/share/nginx/html
+COPY --from=0 /app/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
