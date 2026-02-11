@@ -6,7 +6,7 @@
 # Configure rule MD013 (line length) - allow longer lines (200 chars) in code blocks
 
 # Set indentation for MD007 (unordered list indentation)
-rule 'MD007', indent: 0
+rule 'MD007', indent: 2
 
 # Allow inline HTML elements for MD033
 rule 'MD033', allowed_elements: 'br, sub, sup, span, div, img, p'
