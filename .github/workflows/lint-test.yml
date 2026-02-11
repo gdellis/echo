@@ -35,6 +35,24 @@ jobs:
         working-directory: frontend
         run: npm run lint
 
+  markdown-lint:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Install mdl
+        run: gem install mdl
+
+      - name: Run markdown lint
+        run: mdl .
+
   backend-lint:
     name: Backend Lint
     runs-on: ubuntu-latest
