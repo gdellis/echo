@@ -104,9 +104,9 @@ def process_transcription(self, job_id: str, file_path: str, filename: str,
             job.status = "processing"
             session.commit()
         
-        # Initialize services
-        transcriber = Transcriber(model=model)
-        diarizer = Diarizer()
+        # Initialize services using lazy loading
+        transcriber = _get_transcriber(model=model)
+        diarizer = _get_diarizer()
         
         # Step 1: Transcribe with Whisper
         logger.info(f"Transcribing with Whisper model: {model}")
