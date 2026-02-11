@@ -14,7 +14,7 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 
 **Responsibilities**:
 
-* Create and modsteadify React components
+* Create and modify React components
 * Implement TypeScript interfaces and types
 * Configure and customize Tailwind CSS
 * Set up state management (Context API, Zustand)
