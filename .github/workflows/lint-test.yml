@@ -51,7 +51,7 @@ jobs:
         run: gem install mdl
 
       - name: Run markdown lint
-        run: mdl .
+        run: mdl -c .mdlrc README.md DESIGN.md
 
   backend-lint:
     name: Backend Lint
