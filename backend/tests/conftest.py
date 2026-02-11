@@ -52,7 +52,7 @@ def test_client():
     """Create test client with patched database session."""
     import app.config
     import app.utils.file_ops as file_ops_module
-    from starlette.testclient import TestClient
+    from fastapi.testclient import TestClient
     
     # Create a test session factory
     from sqlalchemy import create_engine
