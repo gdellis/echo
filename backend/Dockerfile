@@ -14,8 +14,8 @@ RUN apt-get update && apt-get install -y \
 # Copy requirements first for better caching
 COPY requirements.txt .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies (use --pre for pre-release packages like httpx 1.0)
+RUN pip install --no-cache-dir --pre -r requirements.txt
 
 # Copy application code
 COPY app ./app
