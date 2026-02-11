@@ -1,6 +1,8 @@
 # Echo - AI-Powered Audio Transcription App
 
-![Echo Logo](resources/echo-icon.png)
+<p align="center">
+  <img src="resources/echo-icon.png" alt="Echo Logo" width="200">
+</p>
 
 [![Lint and Test](https://github.com/gdellis/echo/actions/workflows/lint-test.yml/badge.svg)](https://github.com/gdellis/echo/actions/workflows/lint-test.yml)
 
