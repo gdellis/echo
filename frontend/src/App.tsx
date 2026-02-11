@@ -3,9 +3,28 @@ import FileUpload from './components/FileUpload'
 import TranscriptionViewer from './components/TranscriptionViewer'
 import HistoryPanel from './components/HistoryPanel'
 
+interface Segment {
+  start: number
+  end: number
+  text: string
+  speaker: string
+  confidence: number
+}
+
+interface Job {
+  job_id: string
+  status: string
+  filename: string
+  text: string
+  segments: Segment[]
+  speakers: number
+  duration: number
+  created_at?: string
+}
+
 function App() {
-  const [currentJob, setCurrentJob] = useState<any>(null)
-  const [history, setHistory] = useState<any[]>([])
+  const [currentJob, setCurrentJob] = useState<Job | null>(null)
+  const [history, setHistory] = useState<Job[]>([])
 
   useEffect(() => {
     // Load history on mount
@@ -15,7 +34,7 @@ function App() {
       .catch(() => {})
   }, [])
 
-  const handleJobComplete = (job: any) => {
+  const handleJobComplete = (job: Job) => {
     setCurrentJob(job)
     setHistory(prev => [job, ...prev.filter(h => h.job_id !== job.job_id)])
   }

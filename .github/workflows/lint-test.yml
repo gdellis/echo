@@ -33,7 +33,7 @@ jobs:
 
       - name: Run ESLint
         working-directory: frontend
-        run: npm run lint
+        run: npx eslint src --ext ts,tsx
 
   markdown-lint:
     name: Markdown Lint
@@ -124,4 +124,3 @@ jobs:
       - name: Run tests
         working-directory: frontend
         run: npm test
-

@@ -13,8 +13,27 @@ const ACCEPTED_FILE_TYPES = {
 
 const MAX_FILE_SIZE = 500 * 1024 * 1024 // 500MB
 
+interface Segment {
+  start: number
+  end: number
+  text: string
+  speaker: string
+  confidence: number
+}
+
+interface Job {
+  job_id: string
+  status: string
+  filename: string
+  text: string
+  segments: Segment[]
+  speakers: number
+  duration: number
+  created_at?: string
+}
+
 interface FileUploadProps {
-  onJobComplete: (job: any) => void
+  onJobComplete: (job: Job) => void
 }
 
 export default function FileUpload({ onJobComplete }: FileUploadProps) {
