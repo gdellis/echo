@@ -14,7 +14,7 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 
 **Responsibilities**:
 
-* Create and modsteadify React components
+* Create and modify React components
 * Implement TypeScript interfaces and types
 * Configure and customize Tailwind CSS
 * Set up state management (Context API, Zustand)
@@ -110,10 +110,87 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 * `update existing docs` - Modify documentation
 * `add mermaid diagram` - Create architecture/flow diagrams
 * `fix markdown linting` - Fix markdown linting issues by running `mdl` tool
-  - Run `mdl` to check markdown files for linting issues
-  - Fix any issues identified by the tool
+
+* Run `mdl` to check markdown files for linting issues
+* Fix any issues identified by the tool
 
 ---
+
+### 4a. Markdown Linting Agent (`markdown-linter`)
+
+**Role**: Markdown linting configuration and maintenance
+
+**Responsibilities**:
+
+* Configure and maintain the `mdl` Ruby gem for markdown linting
+* Update `.mdl/style.rb` to enable/disable rules
+* Ensure consistent markdown style across all documentation
+* Fix markdown linting violations in project files
+
+**Access**:
+
+* `.mdl/` directory (configuration)
+* `.mdlrc` (configuration)
+* All markdown files in the project
+
+**Commands**:
+
+* `configure mdl` - Set up or modify markdown linting rules
+* `add linting rule` - Enable a new markdownlint rule
+* `disable linting rule` - Disable a markdownlint rule
+* `check markdown` - Run `mdl --git-recurse .` to check all markdown files in the repo (excludes node_modules/ and other non-tracked files)
+* `fix linting` - Fix markdown linting issues automatically
+
+**Configuration**:
+
+The project uses `mdl` (Markdown Lint) via Ruby gem. Configuration is in:
+
+* `.mdlrc` - Main configuration file pointing to style.rb
+* `.mdl/style.rb` - Custom rules configuration
+
+**Usage**:
+
+When running `mdl` locally, use the `--git-recurse` (`-g`) option to only check files tracked by git:
+
+```bash
+mdl -c .mdlrc --git-recurse .
+```
+
+This excludes `node_modules/`, `venv/`, and other untracked directories automatically.
+
+**Available Rules:**
+
+| Rule | Description |
+|------|-------------|
+| MD001 | Header levels should only increment by one level at a time |
+| MD007 | Unordered list indentation |
+| MD009 | Trailing spaces |
+| MD012 | Multiple blank lines |
+| MD013 | Line length |
+| MD018 | No space after hash on ATX-style header |
+| MD021 | Headers not properly closed |
+| MD022 | Headers should be surrounded by blank lines |
+| MD024 | Multiple headers with the same content |
+| MD026 | Trailing punctuation in header |
+| MD029 | Ordered list item prefix |
+| MD031 | Fenced code blocks should be surrounded by blank lines |
+| MD032 | Lists should be surrounded by blank lines |
+| MD033 | Inline HTML |
+| MD036 | Emphasis used instead of a header |
+| MD040 | Code block style |
+| MD047 | Trailing newline |
+
+**Common Configuration Examples:**
+
+```ruby
+# Disable a rule
+exclude_rule 'MD012'  # Multiple blank lines
+
+# Configure a rule
+rule 'MD007', params: { indent: 2 }  # 2-space indent for lists
+rule 'MD013', params: { line_length: 120, ignore_code_blocks: true }
+rule 'MD033', allowed_elements: 'br, span, div, img'  # Allow inline HTML
+```
 
 ---
 
@@ -147,11 +224,11 @@ Agents coordinate through:
 
 ## Getting Started with an Agent
 
-1. Identify the appropriate agent type for your task
-2. Check the current `DESIGN.md` for architectural context
-3. Use the agent's specific commands for your task
-4. Review generated code against project standards
-5. Test the implementation before committing
+1.  Identify the appropriate agent type for your task
+2.  Check the current `DESIGN.md` for architectural context
+3.  Use the agent's specific commands for your task
+4.  Review generated code against project standards
+5.  Test the implementation before committing
 
 ## Best Practices
 

@@ -1,0 +1,19 @@
+style "#{File.dirname(__FILE__)}/.mdl/style.rb"
+
+# Show kramdown warnings
+# show_kramdown_warnings true
+
+# Git recurse
+# git_recurse true
+
+# Ignore YAML front matter
+# ignore_front_matter true
+
+# Rules to enable (all by default)
+# rules "MD001", "MD002", "MD003"
+
+# Rules to disable (use tilde prefix)
+# rules "~MD006", "~MD021"
+
+# Custom style
+# style "default"

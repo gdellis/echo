@@ -8,18 +8,50 @@ from typing import Optional
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
 
 from app.config import settings
 from app.models import TranscriptionJob, Segment
-from app.tasks.tasks import process_transcription, delete_job
 from app.utils.file_ops import (
     generate_job_id, 
     is_valid_audio_format, 
     get_file_size,
-    cleanup_temp_files
+    cleanup_temp_files,
+    get_database_engine,
+    get_session
 )
 
 router = APIRouter(prefix="/api/v1", tags=["transcription"])
+
+
+# Database dependency that can be overridden in tests
+def get_db():
+    """Get database session dependency."""
+    db = get_session()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# Lazy imports for Celery tasks (to avoid importing torch on module load)
+_process_transcription = None
+_delete_job = None
+
+def _get_process_transcription():
+    """Lazy load process_transcription task."""
+    global _process_transcription
+    if _process_transcription is None:
+        from app.tasks.tasks import process_transcription
+        _process_transcription = process_transcription
+    return _process_transcription
+
+def _get_delete_job():
+    """Lazy load delete_job task."""
+    global _delete_job
+    if _delete_job is None:
+        from app.tasks.tasks import delete_job
+        _delete_job = delete_job
+    return _delete_job
 
 
 @router.post("/transcribe")
@@ -88,7 +120,7 @@ async def transcribe_audio(
             db.close()
         
         # Queue the transcription task
-        process_transcription.delay(job_id, temp_path, file.filename, model, language)
+        _get_process_transcription().delay(job_id, temp_path, file.filename, model, language)
         
         return {
             "job_id": job_id,
@@ -225,7 +257,7 @@ def delete_transcription(job_id: str):
             raise HTTPException(status_code=404, detail="Job not found")
         
         # Queue deletion task
-        delete_job.delay(job_id)
+        _get_delete_job().delay(job_id)
         
         return {
             "message": "Deletion requested",

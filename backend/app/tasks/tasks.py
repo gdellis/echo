@@ -10,16 +10,45 @@ from pathlib import Path
 from typing import Optional
 
 from celery import current_task
-import torch
+
+try:
+    import torch
+    TORCH_AVAILABLE = True
+except ImportError:
+    TORCH_AVAILABLE = False
 
 from app.config import settings
 from app.models import TranscriptionJob, Segment, Base
-from app.services.transcriber import Transcriber
-from app.services.diarizer import Diarizer
 from app.utils.file_ops import get_database_engine
 from app.tasks.celery_app import celery_app
 
 logger = logging.getLogger(__name__)
+
+# Lazy imports for heavy dependencies (torch, Whisper, etc.)
+_transcriber = None
+_diarizer = None
+
+def _get_transcriber(model: str = "base"):
+    """Lazy load Transcriber."""
+    global _transcriber
+    if _transcriber is None:
+        from app.services.transcriber import Transcriber
+        _transcriber = Transcriber(model=model)
+    return _transcriber
+
+def _get_diarizer():
+    """Lazy load Diarizer."""
+    global _diarizer
+    if _diarizer is None:
+        from app.services.diarizer import Diarizer
+        _diarizer = Diarizer()
+    return _diarizer
+
+def _reset_services():
+    """Reset lazy-loaded services (useful for testing)."""
+    global _transcriber, _diarizer
+    _transcriber = None
+    _diarizer = None
 
 
 def get_session():
@@ -75,9 +104,9 @@ def process_transcription(self, job_id: str, file_path: str, filename: str,
             job.status = "processing"
             session.commit()
         
-        # Initialize services
-        transcriber = Transcriber(model=model)
-        diarizer = Diarizer()
+        # Initialize services using lazy loading
+        transcriber = _get_transcriber(model=model)
+        diarizer = _get_diarizer()
         
         # Step 1: Transcribe with Whisper
         logger.info(f"Transcribing with Whisper model: {model}")

@@ -1,6 +1,13 @@
-# Transcriber - AI-Powered Audio Transcription App
+# Echo - AI-Powered Audio Transcription App
 
-An AI-powered transcription application that converts audio to text with speaker diarization using OpenAI Whisper and pyannote.audio.
+<p align="center">
+  <img src="resources/echo-icon.png" alt="Echo Logo" width="200">
+</p>
+
+[![Lint and Test](https://github.com/gdellis/echo/actions/workflows/lint-test.yml/badge.svg)](https://github.com/gdellis/echo/actions/workflows/lint-test.yml)
+
+An AI-powered transcription application that converts audio to text with speaker
+diarization using OpenAI Whisper and pyannote.audio.
 
 ## Features
 
@@ -41,7 +48,7 @@ An AI-powered transcription application that converts audio to text with speaker
 
 ```bash
 git clone <repository-url>
-cd transcriber
+cd echo
 ```
 
 1. Start the application:
@@ -128,9 +135,9 @@ WHISPER_DEVICE=cpu
 PYANNOTE_MODEL=pyannote/speaker-diarization
 CELERY_BROKER_URL=redis://localhost:6379/0
 CELERY_RESULT_BACKEND=redis://localhost:6379/0
-DATABASE_URL=sqlite:///./transcriber.db
+DATABASE_URL=sqlite:///./echo.db
 MAX_UPLOAD_SIZE=524288000
-UPLOAD_DIR=/tmp/transcriber
+UPLOAD_DIR=/tmp/echo
 ```
 
 **Frontend (.env):**
@@ -196,8 +203,8 @@ Delete a transcription job.
 
 ## Project Structure
 
-```
-transcriber/
+```txt
+echo/
 ├── backend/
 │   ├── app/
 │   │   ├── api/          # API endpoints
@@ -226,17 +233,21 @@ transcriber/
 ### Common Issues
 
 1. **Whisper model download fails**
-   - The first run will download the Whisper model (~140MB for base model)
-   - Be patient, this may take a few minutes
+
+- The first run will download the Whisper model (~140MB for base model)
+- Be patient, this may take a few minutes
 
 2. **Port already in use**
-   - Change the port in docker-compose.yml
-   - Update VITE_API_URL in frontend/.env accordingly
+
+- Change the port in docker-compose.yml
+- Update VITE_API_URL in frontend/.env accordingly
 
 3. **File too large**
-   - Default max file size is 500MB
-   - Increase MAX_UPLOAD_SIZE in docker-compose.yml
+
+- Default max file size is 500MB
+- Increase MAX_UPLOAD_SIZE in docker-compose.yml
 
 ## License
 
 MIT
+

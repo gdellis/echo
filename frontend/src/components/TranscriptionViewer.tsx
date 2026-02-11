@@ -42,12 +42,6 @@ export default function TranscriptionViewer({ job }: TranscriptionViewerProps) {
     return colors[speaker as keyof typeof colors] || 'bg-gray-100 text-gray-800 border-gray-200'
   }
 
-  const generatePlainContent = () => {
-    return job.segments.reduce((acc, seg) => {
-      return `${acc}${seg.speaker}: ${seg.text}\n\n`
-    }, '')
-  }
-
   const generateSRTContent = () => {
     return job.segments.reduce((acc, seg, index) => {
       const start = new Date(seg.start * 1000).toISOString().substr(11, 8).replace('.', ',')

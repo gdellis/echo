@@ -4,7 +4,7 @@ interface Job {
   job_id: string
   filename: string
   status: string
-  created_at: string
+  created_at?: string
   duration: number
   speakers: number
 }
@@ -63,7 +63,7 @@ export default function HistoryPanel({ history }: HistoryPanelProps) {
                       {job.filename}
                     </p>
                     <p className="text-xs text-gray-500">
-                      {new Date(job.created_at).toLocaleString()}
+                      {job.created_at ? new Date(job.created_at).toLocaleString() : 'Unknown date'}
                     </p>
                   </div>
                   <div className="flex items-center space-x-2 ml-4">
