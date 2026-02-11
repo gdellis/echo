@@ -110,8 +110,8 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 * `update existing docs` - Modify documentation
 * `add mermaid diagram` - Create architecture/flow diagrams
 * `fix markdown linting` - Fix markdown linting issues by running `mdl` tool
-  - Run `mdl` to check markdown files for linting issues
-  - Fix any issues identified by the tool
+  * Run `mdl` to check markdown files for linting issues
+  * Fix any issues identified by the tool
 
 ---
 

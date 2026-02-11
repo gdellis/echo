@@ -6,7 +6,8 @@
 
 [![Lint and Test](https://github.com/gdellis/echo/actions/workflows/lint-test.yml/badge.svg)](https://github.com/gdellis/echo/actions/workflows/lint-test.yml)
 
-An AI-powered transcription application that converts audio to text with speaker diarization using OpenAI Whisper and pyannote.audio.
+An AI-powered transcription application that converts audio to text with speaker
+diarization using OpenAI Whisper and pyannote.audio.
 
 ## Features
 
@@ -202,7 +203,7 @@ Delete a transcription job.
 
 ## Project Structure
 
-```
+```txt
 echo/
 ├── backend/
 │   ├── app/
@@ -232,17 +233,21 @@ echo/
 ### Common Issues
 
 1. **Whisper model download fails**
+
    - The first run will download the Whisper model (~140MB for base model)
    - Be patient, this may take a few minutes
 
-2. **Port already in use**
+1. **Port already in use**
+
    - Change the port in docker-compose.yml
    - Update VITE_API_URL in frontend/.env accordingly
 
-3. **File too large**
+1. **File too large**
+
    - Default max file size is 500MB
    - Increase MAX_UPLOAD_SIZE in docker-compose.yml
 
 ## License
 
 MIT
+
