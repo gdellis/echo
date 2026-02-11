@@ -1,5 +1,7 @@
 # Echo - AI-Powered Audio Transcription App
 
+![Echo Logo](resources/echo-icon.png)
+
 [![Lint and Test](https://github.com/gdellis/echo/actions/workflows/lint-test.yml/badge.svg)](https://github.com/gdellis/echo/actions/workflows/lint-test.yml)
 
 An AI-powered transcription application that converts audio to text with speaker diarization using OpenAI Whisper and pyannote.audio.
