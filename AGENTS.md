@@ -138,7 +138,7 @@ The Transcriber project uses specialized AI agents for different aspects of deve
 * `configure mdl` - Set up or modify markdown linting rules
 * `add linting rule` - Enable a new markdownlint rule
 * `disable linting rule` - Disable a markdownlint rule
-* `check markdown` - Run `mdl` to check all markdown files
+* `check markdown` - Run `mdl --git-recurse .` to check all markdown files in the repo (excludes node_modules/ and other non-tracked files)
 * `fix linting` - Fix markdown linting issues automatically
 
 **Configuration**:
@@ -147,6 +147,16 @@ The project uses `mdl` (Markdown Lint) via Ruby gem. Configuration is in:
 
 * `.mdlrc` - Main configuration file pointing to style.rb
 * `.mdl/style.rb` - Custom rules configuration
+
+**Usage**:
+
+When running `mdl` locally, use the `--git-recurse` (`-g`) option to only check files tracked by git:
+
+```bash
+mdl -c .mdlrc --git-recurse .
+```
+
+This excludes `node_modules/`, `venv/`, and other untracked directories automatically.
 
 **Available Rules:**
 
