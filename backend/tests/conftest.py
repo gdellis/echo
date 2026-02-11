@@ -86,6 +86,7 @@ def test_client():
     # Import the app (after patching)
     from app.main import app
     
+    # Use the TestClient with app as positional argument
     client = TestClient(app)
     yield client
     
