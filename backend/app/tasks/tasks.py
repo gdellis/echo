@@ -65,13 +65,14 @@ def init_db():
     Base.metadata.create_all(bind=engine)
 
 
-@current_task.task_prerun.connect
+# Signal handlers - connected at module level after celery_app is initialized
+@celery_app.task_prerun.connect
 def on_task_prerun(sender=None, task_id=None, task=None, **kwargs):
     """Initialize db connection before task runs."""
     init_db()
 
 
-@current_task.task_postrun.connect
+@celery_app.task_postrun.connect
 def on_task_postrun(sender=None, task_id=None, task=None, retval=None, **kwargs):
     """Close db connection after task runs."""
     pass
