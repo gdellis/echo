@@ -59,3 +59,11 @@ MD046: true   # Code block style should be consistent
 MD006: false  # Considered too strict for some cases
 MD021: false  # Header closing markers not required
 MD047: false  # Trailing punctuation in code block language names
+
+# Directories and files to exclude
+exclude:
+  - node_modules/
+  - .git/
+  - .venv/
+  - .idea/
+  - __pycache__/
