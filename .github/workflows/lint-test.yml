@@ -100,7 +100,7 @@ jobs:
 
       - name: Run tests
         working-directory: backend
-        run: pytest --tb=short || echo "No tests found"
+        run: pytest --tb=short
 
   frontend-test:
     name: Frontend Tests
@@ -123,5 +123,5 @@ jobs:
 
       - name: Run tests
         working-directory: frontend
-        run: npm test || echo "No tests found"
+        run: npm test
 
