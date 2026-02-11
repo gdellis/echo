@@ -1,4 +1,4 @@
-# Transcriber - AI-Powered Audio Transcription App
+# Echo - AI-Powered Audio Transcription App
 
 [![Lint and Test](https://github.com/gdellis/echo/actions/workflows/lint-test.yml/badge.svg)](https://github.com/gdellis/echo/actions/workflows/lint-test.yml)
 
@@ -43,7 +43,7 @@ An AI-powered transcription application that converts audio to text with speaker
 
 ```bash
 git clone <repository-url>
-cd transcriber
+cd echo
 ```
 
 1. Start the application:
@@ -130,9 +130,9 @@ WHISPER_DEVICE=cpu
 PYANNOTE_MODEL=pyannote/speaker-diarization
 CELERY_BROKER_URL=redis://localhost:6379/0
 CELERY_RESULT_BACKEND=redis://localhost:6379/0
-DATABASE_URL=sqlite:///./transcriber.db
+DATABASE_URL=sqlite:///./echo.db
 MAX_UPLOAD_SIZE=524288000
-UPLOAD_DIR=/tmp/transcriber
+UPLOAD_DIR=/tmp/echo
 ```
 
 **Frontend (.env):**
@@ -199,7 +199,7 @@ Delete a transcription job.
 ## Project Structure
 
 ```
-transcriber/
+echo/
 ├── backend/
 │   ├── app/
 │   │   ├── api/          # API endpoints
