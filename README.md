@@ -234,18 +234,18 @@ echo/
 
 1. **Whisper model download fails**
 
-   - The first run will download the Whisper model (~140MB for base model)
-   - Be patient, this may take a few minutes
+- The first run will download the Whisper model (~140MB for base model)
+- Be patient, this may take a few minutes
 
 1. **Port already in use**
 
-   - Change the port in docker-compose.yml
-   - Update VITE_API_URL in frontend/.env accordingly
+- Change the port in docker-compose.yml
+- Update VITE_API_URL in frontend/.env accordingly
 
 1. **File too large**
 
-   - Default max file size is 500MB
-   - Increase MAX_UPLOAD_SIZE in docker-compose.yml
+- Default max file size is 500MB
+- Increase MAX_UPLOAD_SIZE in docker-compose.yml
 
 ## License
 

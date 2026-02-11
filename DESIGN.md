@@ -72,7 +72,9 @@ graph TD
     CB -->|Scheduled Tasks| CW
 ```
 
-**Diagram Explanation**: The architecture shows a layered approach with React frontend handling user interaction, FastAPI backend providing REST APIs, Celery for async task processing, and ML models (Whisper and pyannote.audio) for transcription and speaker identification. Data is stored in SQLite.
+**Diagram Explanation**: The architecture shows a layered approach with React frontend handling user interaction,
+FastAPI backend providing REST APIs, Celery for async task processing, and ML models (Whisper and pyannote.audio) for
+transcription and speaker identification. Data is stored in SQLite.
 
 ---
 
@@ -281,7 +283,9 @@ graph TD
     style OG fill:#e1f5ff
 ```
 
-**Diagram Explanation**: The audio processing pipeline converts input files through preprocessing, Whisper transcription for speech-to-text, pyannote.audio speaker diarization, alignment to match speakers with transcribed text, and finally outputs in multiple formats (text, SRT, JSON).
+**Diagram Explanation**: The audio processing pipeline converts input files through preprocessing, Whisper transcription
+for speech-to-text, pyannote.audio speaker diarization, alignment to match speakers with transcribed text, and finally
+outputs in multiple formats (text, SRT, JSON).
 
 ---
 
